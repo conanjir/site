@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { MediaPlate } from "@/components/MediaPlate";
+import { ProjectCarousel } from "@/components/ProjectCarousel";
 import { projects } from "@/data/site";
 
 type Params = {
@@ -22,46 +22,7 @@ export default async function ProjectPage({ params }: Params) {
 
   return (
     <div className="project-page">
-      <section className="shell section-gap project-sequence">
-        <MediaPlate tone={project.heroTone} label={project.heroLabel} className="project-hero__media" videoSrc={project.heroVideoSrc} />
-        {project.blocks.map((block, blockIndex) => {
-          if (block.type === "full") {
-            return (
-              <div key={`${project.slug}-${blockIndex}`} className="sequence-item">
-                <MediaPlate
-                  tone={block.tone}
-                  label={block.label}
-                  caption={block.caption}
-                  className={`project-block project-block--${block.height ?? "medium"}`}
-                />
-              </div>
-            );
-          }
-
-          if (block.type === "pair") {
-            return (
-              <div key={`${project.slug}-${blockIndex}`} className="sequence-item">
-                <div className="project-pair">
-                  {block.items.map((item) => (
-                    <MediaPlate key={item.label} tone={item.tone} label={item.label} caption={item.caption} className="project-pair__item" showMeta={false} />
-                  ))}
-                </div>
-              </div>
-            );
-          }
-
-          return (
-            <div key={`${project.slug}-${blockIndex}`} className="sequence-item">
-              <MediaPlate
-                tone={block.tone}
-                label={block.label}
-                caption={block.caption}
-                className={`project-block project-block--${block.type}`}
-              />
-            </div>
-          );
-        })}
-      </section>
+      <ProjectCarousel project={project} />
 
       <section className="shell section-gap">
         <div className="project-meta">

@@ -15,6 +15,7 @@ const navItems = [
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const isWorkIndex = pathname === "/work";
   const isCurrent = (href: Route) =>
     href === "/work" ? pathname === "/work" || pathname.startsWith("/work/") : pathname === href;
 
@@ -27,7 +28,7 @@ export function Header() {
 
   return (
     <>
-      <header className="site-header">
+      <header className={`site-header${isWorkIndex ? " site-header--overlay" : ""}`}>
         <div className="shell site-header__inner">
           <Link href="/work" className="wordmark" onClick={() => setOpen(false)}>
             Conan Richards
@@ -53,7 +54,7 @@ export function Header() {
         </div>
       </header>
 
-      <div id="mobile-menu" className={`mobile-menu${open ? " is-open" : ""}`}>
+      <div id="mobile-menu" className={`mobile-menu${isWorkIndex ? " mobile-menu--overlay" : ""}${open ? " is-open" : ""}`}>
         <nav className="mobile-menu__nav" aria-label="Mobile">
           <Link href="/work" className="mobile-link" onClick={() => setOpen(false)}>
             Conan Richards

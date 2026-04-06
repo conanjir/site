@@ -6,36 +6,42 @@ export type MediaTone =
   | "fragment"
   | "neutral";
 
+export type MediaSurface = "tone" | "page" | "paper" | "ink";
+export type MediaFit = "cover" | "contain";
+export type MediaDisplay = "full" | "wide" | "medium" | "narrow";
+export type MediaAlign = "left" | "center" | "right";
+
+export type MediaAsset = {
+  kind: "image" | "video";
+  src: string;
+  width: number;
+  height: number;
+  fit?: MediaFit;
+  display?: MediaDisplay;
+  align?: MediaAlign;
+  surface?: MediaSurface;
+  objectPosition?: string;
+};
+
+type ProjectMediaEntry = {
+  tone: MediaTone;
+  label: string;
+  caption?: string;
+  media: MediaAsset;
+};
+
 export type MediaBlock =
-  | {
+  | (ProjectMediaEntry & {
       type: "full";
-      tone: MediaTone;
-      label: string;
-      caption?: string;
       height?: "tall" | "medium" | "compact";
-    }
+    })
   | {
       type: "pair";
-      items: { tone: MediaTone; label: string; caption?: string }[];
+      items: ProjectMediaEntry[];
     }
-  | {
-      type: "detail";
-      tone: MediaTone;
-      label: string;
-      caption: string;
-    }
-  | {
-      type: "diagram";
-      tone: MediaTone;
-      label: string;
-      caption: string;
-    }
-  | {
-      type: "video";
-      tone: MediaTone;
-      label: string;
-      caption: string;
-    };
+  | (ProjectMediaEntry & {
+      type: "detail" | "diagram" | "video";
+    });
 
 export type Project = {
   slug: string;
@@ -48,7 +54,7 @@ export type Project = {
   summary: string;
   heroTone: MediaTone;
   heroLabel: string;
-  heroVideoSrc?: string;
+  heroMedia: MediaAsset;
   intro: string;
   application: string;
   blocks: MediaBlock[];
@@ -61,6 +67,203 @@ export type Fragment = {
   year: string;
   tone: MediaTone;
   aspect: "portrait" | "square" | "landscape" | "tall";
+};
+
+function image(
+  src: string,
+  width: number,
+  height: number,
+  options: Omit<MediaAsset, "kind" | "src" | "width" | "height"> = {}
+): MediaAsset {
+  return {
+    kind: "image",
+    src,
+    width,
+    height,
+    ...options
+  };
+}
+
+function video(
+  src: string,
+  width: number,
+  height: number,
+  options: Omit<MediaAsset, "kind" | "src" | "width" | "height"> = {}
+): MediaAsset {
+  return {
+    kind: "video",
+    src,
+    width,
+    height,
+    ...options
+  };
+}
+
+const siltMedia = {
+  hero: video("/videos/silt-mainvideo.mp4", 1920, 1080, {
+    fit: "cover",
+    display: "full",
+    surface: "ink"
+  }),
+  splash: image("/images/silt/silt_splash.png", 4299, 5622, {
+    fit: "contain",
+    display: "narrow",
+    surface: "page"
+  }),
+  billboard: image("/images/silt/silt_billboard.png", 7879, 5365, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  web: image("/images/silt/silt_web.png", 1920, 1080, {
+    fit: "contain",
+    display: "wide",
+    surface: "page"
+  }),
+  socials: image("/images/silt/silt_socials.png", 1553, 959, {
+    fit: "contain",
+    display: "wide",
+    surface: "page"
+  }),
+  poster: image("/images/silt/silt_poster.png", 7321, 4770, {
+    fit: "contain",
+    display: "wide",
+    surface: "page"
+  }),
+  ticket: image("/images/silt/silt_ticket.png", 1920, 1080, {
+    fit: "contain",
+    display: "wide",
+    surface: "page"
+  })
+};
+
+const myMedia = {
+  logo: image("/images/my/my_logo.jpg", 5897, 5897, {
+    fit: "contain",
+    display: "narrow",
+    surface: "page"
+  }),
+  ab1: image("/images/my/my_ab1.jpg", 2561, 3201, {
+    fit: "contain",
+    display: "narrow",
+    surface: "page"
+  }),
+  ab2: image("/images/my/my_ab2.jpg", 2561, 3201, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  ab3: image("/images/my/my_ab3.jpg", 2561, 3201, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  ab4: image("/images/my/my_ab4.jpg", 3601, 4801, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  bb1: image("/images/my/my_bb1.jpg", 3601, 4801, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  bb2: image("/images/my/my_bb2.jpg", 3601, 4801, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  bb3: image("/images/my/my_bb3.jpg", 3600, 4801, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  bb4: image("/images/my/my_bb4.jpg", 3601, 4801, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  bb5: image("/images/my/my_bb5.jpg", 3601, 4801, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  businesscard: image("/images/my/my_businesscard.jpg", 4000, 3000, {
+    fit: "contain",
+    display: "wide",
+    surface: "page"
+  }),
+  label1: image("/images/my/my_label1.jpg", 586, 780, {
+    fit: "contain",
+    display: "full",
+    surface: "page"
+  }),
+  label2: image("/images/my/my_label2.jpg", 585, 439, {
+    fit: "contain",
+    display: "wide",
+    surface: "page"
+  })
+};
+
+const foamMedia = {
+  frame1: image("/images/foam/foam_1.png", 3456, 1944, {
+    fit: "cover",
+    display: "full",
+    surface: "ink"
+  }),
+  frame2: image("/images/foam/foam_2.png", 3456, 1944, {
+    fit: "contain",
+    display: "full",
+    surface: "ink"
+  }),
+  frame3: image("/images/foam/foam_3.png", 3456, 1944, {
+    fit: "contain",
+    display: "full",
+    surface: "ink"
+  }),
+  frame4: image("/images/foam/foam_4.png", 3456, 1944, {
+    fit: "contain",
+    display: "wide",
+    surface: "ink"
+  }),
+  frame5: image("/images/foam/foam_5.png", 3456, 1944, {
+    fit: "contain",
+    display: "full",
+    surface: "ink"
+  }),
+  frame6: image("/images/foam/foam_6.png", 3456, 1944, {
+    fit: "contain",
+    display: "full",
+    surface: "ink"
+  })
+};
+
+const constellationsMedia = {
+  hero: image("/images/constellations/constellations_event.jpeg", 3859, 5028, {
+    fit: "contain",
+    display: "narrow",
+    surface: "page"
+  }),
+  aframe: image("/images/constellations/constellations_aframe.jpeg", 3859, 5028, {
+    fit: "contain",
+    display: "narrow",
+    surface: "page"
+  }),
+  dj: image("/images/constellations/constellations_dj.jpeg", 3859, 5028, {
+    fit: "contain",
+    display: "narrow",
+    surface: "page"
+  }),
+  misato: image("/images/constellations/constellations_misatoyukimoto.jpeg", 3859, 5028, {
+    fit: "contain",
+    display: "narrow",
+    surface: "page"
+  }),
+  video: video("/videos/constellations.mp4", 1080, 1920, {
+    fit: "contain",
+    display: "medium",
+    surface: "ink"
+  })
 };
 
 export const siteSettings = {
@@ -81,211 +284,279 @@ export const projects: Project[] = [
   {
     slug: "silt",
     title: "SILT",
-    discipline: "Spatial System",
+    discipline: "Exhibition Concept",
     description:
-      "An identity and exhibition environment shaped as a continuous system across signage, moving image, interface and spatial rhythm.",
+      "An exhibition concept built as a continuous identity across moving image, interface, print and environmental scale.",
     year: "2026",
     type: "Exhibition identity",
     tags: ["Spatial", "Identity", "Sound"],
     summary:
-      "A spatial and sensory exhibition system with emphasis on continuity across physical and digital layers.",
+      "A sensory exhibition system carried across moving image, spatial graphics and supporting campaign matter.",
     heroTone: "silt",
-    heroLabel: "Spatial entry sequence",
-    heroVideoSrc: "/videos/silt-mainvideo.mp4",
+    heroLabel: "Main film",
+    heroMedia: siltMedia.hero,
     intro:
-      "SILT organises image, signage, motion and wayfinding into a single paced environment. The emphasis is on consistency under shifting viewing distances and across physical, digital and atmospheric formats.",
+      "SILT organises image, signage, motion and wayfinding into a single paced environment. The emphasis is on continuity under shifting viewing distances and across physical, digital and atmospheric formats.",
     application:
-      "The system is positioned through environmental views, directional graphics, display surfaces and timed media states that maintain the same typographic and tonal discipline.",
+      "The sequence moves between the main film, large-scale environmental views and supporting campaign pieces so the system reads as one atmosphere rather than a set of isolated outputs.",
     blocks: [
       {
         type: "full",
         tone: "silt",
-        label: "Threshold environment",
-        caption: "Long-form pacing through entry, title and atmospheric media.",
+        label: "Identity splash",
+        media: siltMedia.splash,
         height: "tall"
-      },
-      {
-        type: "diagram",
-        tone: "neutral",
-        label: "System map",
-        caption: "Spatial relationships between entry, exhibition, listening and archive zones."
       },
       {
         type: "full",
         tone: "silt",
-        label: "Environmental deployment",
-        caption: "Identity applied across projection, print and architectural touchpoints.",
+        label: "Billboard",
+        media: siltMedia.billboard,
+        height: "medium"
+      },
+      {
+        type: "pair",
+        items: [
+          {
+            tone: "silt",
+            label: "Website",
+            media: siltMedia.web
+          },
+          {
+            tone: "silt",
+            label: "Socials",
+            media: siltMedia.socials
+          }
+        ]
+      },
+      {
+        type: "full",
+        tone: "silt",
+        label: "Poster",
+        media: siltMedia.poster,
         height: "medium"
       },
       {
         type: "detail",
-        tone: "neutral",
-        label: "Caption logic",
-        caption: "Metadata, tonal hierarchy and light-response testing."
+        tone: "silt",
+        label: "Ticket",
+        media: siltMedia.ticket
       }
     ]
   },
   {
     slug: "misato-yukimoto",
     title: "Misato Yukimoto",
-    discipline: "Identity",
+    discipline: "Brand Identity",
     description:
-      "A rebrand based on reduction, spacing, subtle variation and disciplined application across digital and physical contexts.",
+      "A rebrand built through typographic restraint, quiet spacing and deliberate application across image and packaging.",
     year: "2025",
     type: "Brand system",
     tags: ["Fashion", "Typography", "Retail"],
     summary:
-      "A fashion identity defined by typographic order, calm spacing and precise deployment.",
+      "A fashion identity defined by reduced typography, calm spacing and consistent material treatment.",
     heroTone: "misato",
-    heroLabel: "Lookbook and identity field",
+    heroLabel: "Portrait 01",
+    heroMedia: myMedia.ab1,
     intro:
       "The rebrand is built through reduction. Typography, spacing and image framing do the work, with variation handled through scale, rhythm and material contrast rather than graphic excess.",
     application:
-      "Applications include lookbook layouts, social formats, packaging, retail signage and a restrained ecommerce language that preserves the same spacing discipline.",
+      "The project is shown through campaign imagery, printed matter and garment labels, keeping the same spacing discipline across digital and physical touchpoints.",
     blocks: [
       {
         type: "full",
         tone: "misato",
-        label: "Brand field",
-        caption: "Primary identity with softened contrast and typographic spacing.",
-        height: "medium"
+        label: "Campaign portrait",
+        media: myMedia.ab1,
+        height: "tall"
       },
       {
         type: "pair",
         items: [
           {
-            tone: "neutral",
-            label: "Grid specification",
-            caption: "Alignment rules for editorial and retail outputs."
+            tone: "misato",
+            label: "Portrait 02",
+            media: myMedia.ab2
           },
           {
             tone: "misato",
-            label: "Digital commerce",
-            caption: "Product and campaign layouts built on the same spacing system."
+            label: "Portrait 03",
+            media: myMedia.ab3
           }
         ]
-      },
-      {
-        type: "full",
-        tone: "misato",
-        label: "Retail placement",
-        caption: "Quiet application across mirror vinyl, tags and material sampling.",
-        height: "tall"
-      },
-      {
-        type: "detail",
-        tone: "neutral",
-        label: "Guideline fragment",
-        caption: "Wordmark spacing, image ratio and caption hierarchy."
-      }
-    ]
-  },
-  {
-    slug: "moving-image-sound",
-    title: "Moving Image + Sound",
-    discipline: "Motion + Sound",
-    description:
-      "Art direction for moving image and sound treated as a single pacing system with user-triggered sonic layers.",
-    year: "2025",
-    type: "Motion + sound system",
-    tags: ["Motion", "Audio", "Rhythm"],
-    summary:
-      "A project centred on atmosphere, rhythm and the relationship between image timing and sonic structure.",
-    heroTone: "motion",
-    heroLabel: "Sequence still",
-    intro:
-      "This project presents motion and sound as a shared compositional field. The interface remains still and quiet while the media demonstrates pacing, interval, density and release.",
-    application:
-      "The system is shown through short loops, frame studies, timing diagrams and interface placements where sound remains deliberate and user-triggered.",
-    blocks: [
-      {
-        type: "video",
-        tone: "motion",
-        label: "Motion loop",
-        caption: "Muted by default. Structured around interval, fade and image hold."
       },
       {
         type: "pair",
         items: [
           {
-            tone: "neutral",
-            label: "Frame study",
-            caption: "Held image, blur transition and pacing notes."
+            tone: "misato",
+            label: "Portrait 04",
+            media: myMedia.ab4
           },
           {
-            tone: "motion",
-            label: "Sound trigger state",
-            caption: "User-controlled sonic layer with minimal control treatment."
+            tone: "misato",
+            label: "Business card",
+            media: myMedia.businesscard
           }
         ]
       },
       {
-        type: "diagram",
-        tone: "neutral",
-        label: "Timing diagram",
-        caption: "Durational structure across image, typography and sound."
+        type: "pair",
+        items: [
+          {
+            tone: "misato",
+            label: "Lookbook 01",
+            media: myMedia.bb1
+          },
+          {
+            tone: "misato",
+            label: "Lookbook 02",
+            media: myMedia.bb2
+          }
+        ]
       },
       {
-        type: "full",
-        tone: "motion",
-        label: "Screen environment",
-        caption: "Motion deployed within a believable spatial and cultural context.",
-        height: "medium"
+        type: "pair",
+        items: [
+          {
+            tone: "misato",
+            label: "Lookbook 03",
+            media: myMedia.bb3
+          },
+          {
+            tone: "misato",
+            label: "Lookbook 04",
+            media: myMedia.bb4
+          }
+        ]
+      },
+      {
+        type: "pair",
+        items: [
+          {
+            tone: "misato",
+            label: "Lookbook 05",
+            media: myMedia.bb5
+          },
+          {
+            tone: "misato",
+            label: "Woven label",
+            media: myMedia.label1
+          }
+        ]
+      },
+      {
+        type: "detail",
+        tone: "misato",
+        label: "Care label",
+        media: myMedia.label2
       }
     ]
   },
   {
-    slug: "fashion-retail-context",
-    title: "Fashion / Retail Context",
-    discipline: "Retail Context",
+    slug: "foam",
+    title: "foam",
+    discipline: "Short Film",
     description:
-      "A public-facing identity system translated across campaign surfaces, audience scale and environmental touchpoints.",
-    year: "2024",
-    type: "Context system",
-    tags: ["Retail", "Spatial", "Culture"],
+      "A one-minute short film shaped through restrained pacing, low light and intimate atmospheric detail.",
+    year: "2025",
+    type: "Short film",
+    tags: ["Film", "Atmosphere", "Rhythm"],
     summary:
-      "A project bridging identity concept and lived deployment across fashion and retail environments.",
-    heroTone: "retail",
-    heroLabel: "Campaign environment",
+      "A one-minute short film focused on close framing, suspended pacing and a soft tonal register.",
+    heroTone: "motion",
+    heroLabel: "Frame 01",
+    heroMedia: foamMedia.frame1,
     intro:
-      "This work is structured around context. Identity is tested against audience movement, storefront conditions, social circulation and physical encounter rather than isolated graphic presentation.",
+      "foam is a one-minute short film built through held frames, soft transitions and a close attention to texture. The pacing stays spare so shifts in focus, light and distance carry the emotional weight.",
     application:
-      "Views prioritise wider environmental framing, signage, campaign rollouts, interface touchpoints and how the system behaves under public use.",
+      "The project is presented through still frames rather than explanation-heavy diagrams, keeping the sequence close to the film's own sense of drift and suspension.",
     blocks: [
       {
+        type: "pair",
+        items: [
+          {
+            tone: "motion",
+            label: "Frame 02",
+            media: foamMedia.frame2
+          },
+          {
+            tone: "motion",
+            label: "Frame 03",
+            media: foamMedia.frame3
+          }
+        ]
+      },
+      {
         type: "full",
+        tone: "motion",
+        label: "Frame 04",
+        media: foamMedia.frame4,
+        height: "medium"
+      },
+      {
+        type: "pair",
+        items: [
+          {
+            tone: "motion",
+            label: "Frame 05",
+            media: foamMedia.frame5
+          },
+          {
+            tone: "motion",
+            label: "Frame 06",
+            media: foamMedia.frame6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "constellations",
+    title: "constellations",
+    discipline: "Campaign Event",
+    description:
+      "A campaign event framed through signage, crowd movement, live performance and the images left behind afterward.",
+    year: "2024",
+    type: "Campaign event",
+    tags: ["Event", "Fashion", "Culture"],
+    summary:
+      "An event project balancing invitation, atmosphere and audience-facing documentation.",
+    heroTone: "retail",
+    heroLabel: "Event floor",
+    heroMedia: constellationsMedia.hero,
+    intro:
+      "constellations was designed as a campaign event where identity needed to hold across arrival, performance and the informal circulation of guest imagery. The work reads through atmosphere as much as through fixed branding.",
+    application:
+      "The sequence moves between audience views, event signage and a vertical film fragment so the project stays grounded in how the event was actually encountered.",
+    blocks: [
+      {
+        type: "video",
         tone: "retail",
-        label: "Storefront condition",
-        caption: "Street-facing application with public scale and audience movement.",
-        height: "tall"
+        label: "Event film",
+        media: constellationsMedia.video
       },
       {
         type: "pair",
         items: [
           {
             tone: "retail",
-            label: "Campaign surface",
-            caption: "Identity translated across glass, display and social circulation."
+            label: "A-frame",
+            media: constellationsMedia.aframe
           },
           {
-            tone: "neutral",
-            label: "Touchpoint detail",
-            caption: "Ticketing, event notices and interface placement."
+            tone: "retail",
+            label: "DJ set",
+            media: constellationsMedia.dj
           }
         ]
       },
       {
         type: "full",
         tone: "retail",
-        label: "Audience-scale view",
-        caption: "Context shown through distance, proportion and dwell time.",
-        height: "medium"
-      },
-      {
-        type: "detail",
-        tone: "neutral",
-        label: "Consistency check",
-        caption: "System behaviour across mobile, print and environmental graphics."
+        label: "Guest portrait",
+        media: constellationsMedia.misato,
+        height: "tall"
       }
     ]
   }

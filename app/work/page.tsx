@@ -4,7 +4,7 @@ import { projects } from "@/data/site";
 
 export default function WorkPage() {
   return (
-    <div className="page">
+    <div className="page page--work">
       <section className="shell section-gap work-list" id="work">
         <div className="work-list__items">
           {projects.map((project) => (
