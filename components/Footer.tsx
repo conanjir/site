@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { siteSettings } from "@/data/site";
 
 export function Footer() {
@@ -11,9 +9,6 @@ export function Footer() {
           <a href={`mailto:${siteSettings.email}`} className="footer-link">
             {siteSettings.email}
           </a>
-          <Link href="/cv" className="footer-link">
-            CV
-          </Link>
         </div>
       </div>
     </footer>

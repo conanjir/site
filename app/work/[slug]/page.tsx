@@ -23,7 +23,7 @@ export default async function ProjectPage({ params }: Params) {
   return (
     <div className="project-page">
       <section className="shell section-gap project-sequence">
-        <MediaPlate tone={project.heroTone} label={project.heroLabel} className="project-hero__media" />
+        <MediaPlate tone={project.heroTone} label={project.heroLabel} className="project-hero__media" videoSrc={project.heroVideoSrc} />
         {project.blocks.map((block, blockIndex) => {
           if (block.type === "full") {
             return (

@@ -48,6 +48,7 @@ export type Project = {
   summary: string;
   heroTone: MediaTone;
   heroLabel: string;
+  heroVideoSrc?: string;
   intro: string;
   application: string;
   blocks: MediaBlock[];
@@ -65,9 +66,9 @@ export type Fragment = {
 export const siteSettings = {
   name: "Conan Richards",
   statement:
-    "Designer working across digital and spatial systems, with a focus on fashion and cultural environments, shaped through motion, sound, and atmosphere.",
+    "Designer working across digital, spatial and visual systems, with a focus on fashion and cultural environments.",
   infoText:
-    "A portfolio structured as a restrained editorial archive for digital, spatial and sensory systems. The work focuses on pacing, hierarchy, atmosphere and deployment across fashion, retail and cultural settings.",
+    "The practice centres on systems that organise how information, image, and space are experienced. Projects operate across interfaces, moving image, and spatial contexts, forming cohesive environments and visual languages that extend across formats and contexts.",
   email: "studio@conanrichards.com",
   socials: [
     { label: "Instagram", href: "#" },
@@ -90,6 +91,7 @@ export const projects: Project[] = [
       "A spatial and sensory exhibition system with emphasis on continuity across physical and digital layers.",
     heroTone: "silt",
     heroLabel: "Spatial entry sequence",
+    heroVideoSrc: "/videos/silt-mainvideo.mp4",
     intro:
       "SILT organises image, signage, motion and wayfinding into a single paced environment. The emphasis is on consistency under shifting viewing distances and across physical, digital and atmospheric formats.",
     application:
@@ -101,21 +103,6 @@ export const projects: Project[] = [
         label: "Threshold environment",
         caption: "Long-form pacing through entry, title and atmospheric media.",
         height: "tall"
-      },
-      {
-        type: "pair",
-        items: [
-          {
-            tone: "neutral",
-            label: "Signage family",
-            caption: "Directional typography and material restraint."
-          },
-          {
-            tone: "silt",
-            label: "Interface surface",
-            caption: "Digital support view for schedule and scene control."
-          }
-        ]
       },
       {
         type: "diagram",

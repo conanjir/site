@@ -6,12 +6,27 @@ type Props = {
   caption?: string;
   className?: string;
   showMeta?: boolean;
+  videoSrc?: string;
 };
 
-export function MediaPlate({ tone, label, caption, className = "", showMeta = true }: Props) {
+export function MediaPlate({ tone, label, caption, className = "", showMeta = true, videoSrc }: Props) {
   return (
-    <figure className={`media-plate media-plate--${tone} ${className}`.trim()}>
-      <div className="media-plate__surface" aria-label={label} />
+    <figure className={`media-plate media-plate--${tone} ${videoSrc ? "media-plate--video" : ""} ${className}`.trim()}>
+      <div className="media-plate__surface" aria-label={label}>
+        {videoSrc ? (
+          <video
+            className="media-plate__video"
+            src={videoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
+        ) : null}
+      </div>
       {showMeta ? (
         <figcaption className="media-plate__meta">
           <span className="caption">{label}</span>
