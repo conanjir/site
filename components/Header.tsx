@@ -31,7 +31,7 @@ export function Header() {
       <header className={`site-header${isWorkIndex ? " site-header--overlay" : ""}`}>
         <div className="shell site-header__inner">
           <Link href="/work" className="wordmark" onClick={() => setOpen(false)}>
-            Conan Richards
+            Conan J. Ido Richards
           </Link>
 
           <nav className="desktop-nav" aria-label="Primary">

@@ -7,8 +7,13 @@ import { siteSettings } from "@/data/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: `${siteSettings.name} Portfolio`,
-  description: siteSettings.infoText
+  title: "conanjir",
+  description: siteSettings.infoText,
+  icons: {
+    icon: "/images/favicon/favicon.png",
+    shortcut: "/images/favicon/favicon.png",
+    apple: "/images/favicon/favicon.png"
+  }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
