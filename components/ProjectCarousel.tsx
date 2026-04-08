@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import type { KeyboardEvent, MouseEvent, PointerEvent } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { KeyboardEvent, MouseEvent, PointerEvent, TouchEvent } from "react";
 
 import { MediaPlate } from "@/components/MediaPlate";
 import type { Project } from "@/data/site";
@@ -47,8 +47,37 @@ function getSlides(project: Project): Slide[] {
 export function ProjectCarousel({ project }: { project: Project }) {
   const slides = getSlides(project);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const slideRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pointerSide, setPointerSide] = useState<"prev" | "next">("next");
+  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updateViewportHeight = () => {
+      if (typeof window === "undefined" || !window.matchMedia("(max-width: 640px)").matches) {
+        setViewportHeight(null);
+        return;
+      }
+
+      const slide = slideRefs.current[currentIndex];
+
+      if (!slide) {
+        return;
+      }
+
+      setViewportHeight(slide.offsetHeight);
+    };
+
+    const frame = window.requestAnimationFrame(updateViewportHeight);
+
+    window.addEventListener("resize", updateViewportHeight);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", updateViewportHeight);
+    };
+  }, [currentIndex, slides.length]);
 
   const updatePointer = (event: PointerEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => {
     const viewport = viewportRef.current;
@@ -79,6 +108,10 @@ export function ProjectCarousel({ project }: { project: Project }) {
   };
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+      return;
+    }
+
     updatePointer(event);
 
     const viewport = viewportRef.current;
@@ -91,6 +124,40 @@ export function ProjectCarousel({ project }: { project: Project }) {
     const isPrevSide = event.clientX - rect.left < rect.width / 2;
 
     if (isPrevSide) {
+      goPrev();
+      return;
+    }
+
+    goNext();
+  };
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+
+    touchStartRef.current = {
+      x: touch.clientX,
+      y: touch.clientY
+    };
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    const touchStart = touchStartRef.current;
+
+    if (!touchStart) {
+      return;
+    }
+
+    touchStartRef.current = null;
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+      return;
+    }
+
+    if (deltaX > 0) {
       goPrev();
       return;
     }
@@ -118,13 +185,25 @@ export function ProjectCarousel({ project }: { project: Project }) {
         tabIndex={0}
         onPointerMove={updatePointer}
         onClick={handleClick}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={() => {
+          touchStartRef.current = null;
+        }}
         onKeyDown={handleKeyDown}
         aria-label={`${project.title} image carousel`}
       >
-        <div className="project-carousel__viewport">
+        <div className="project-carousel__viewport" style={viewportHeight ? { height: `${viewportHeight}px` } : undefined}>
           <div className="project-carousel__track" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-            {slides.map((slide) => (
-              <div key={slide.id} className="project-carousel__slide" aria-hidden={slide !== slides[currentIndex]}>
+            {slides.map((slide, index) => (
+              <div
+                key={slide.id}
+                ref={(node) => {
+                  slideRefs.current[index] = node;
+                }}
+                className="project-carousel__slide"
+                aria-hidden={slide !== slides[currentIndex]}
+              >
                 <MediaPlate
                   tone={project.heroTone}
                   label={slide.label}
