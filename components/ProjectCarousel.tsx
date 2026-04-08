@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { KeyboardEvent, MouseEvent, PointerEvent } from "react";
 
 import { MediaPlate } from "@/components/MediaPlate";
@@ -9,47 +9,43 @@ import type { Project } from "@/data/site";
 type Slide = {
   id: string;
   label: string;
-  tone: Project["heroTone"];
   media: Project["heroMedia"];
 };
 
+function getCarouselMedia(media: Slide["media"]): Slide["media"] {
+  if (media.kind === "video" && media.fit === "cover") {
+    return { ...media, fit: "contain" };
+  }
+
+  return media;
+}
+
 function getSlides(project: Project): Slide[] {
-  const slides: Slide[] = [
+  return [
+    ...(project.carouselIntro
+      ? [
+          {
+            id: `${project.slug}-intro`,
+            label: project.carouselIntro.label,
+            media: getCarouselMedia(project.carouselIntro.media)
+          }
+        ]
+      : []),
     {
       id: `${project.slug}-hero`,
       label: project.heroLabel,
-      tone: project.heroTone,
-      media: project.heroMedia
-    }
+      media: getCarouselMedia(project.heroMedia)
+    },
+    ...project.media.map((item, index) => ({
+      id: `${project.slug}-${index}`,
+      label: item.label,
+      media: getCarouselMedia(item.media)
+    }))
   ];
-
-  project.blocks.forEach((block, blockIndex) => {
-    if (block.type === "pair") {
-      block.items.forEach((item, itemIndex) => {
-        slides.push({
-          id: `${project.slug}-${blockIndex}-${itemIndex}`,
-          label: item.label,
-          tone: item.tone,
-          media: item.media
-        });
-      });
-
-      return;
-    }
-
-    slides.push({
-      id: `${project.slug}-${blockIndex}`,
-      label: block.label,
-      tone: block.tone,
-      media: block.media
-    });
-  });
-
-  return slides;
 }
 
 export function ProjectCarousel({ project }: { project: Project }) {
-  const slides = useMemo(() => getSlides(project), [project]);
+  const slides = getSlides(project);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pointerSide, setPointerSide] = useState<"prev" | "next">("next");
@@ -123,7 +119,6 @@ export function ProjectCarousel({ project }: { project: Project }) {
         onPointerMove={updatePointer}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
-        data-direction={pointerSide}
         aria-label={`${project.title} image carousel`}
       >
         <div className="project-carousel__viewport">
@@ -131,11 +126,10 @@ export function ProjectCarousel({ project }: { project: Project }) {
             {slides.map((slide) => (
               <div key={slide.id} className="project-carousel__slide" aria-hidden={slide !== slides[currentIndex]}>
                 <MediaPlate
-                  tone={slide.tone}
+                  tone={project.heroTone}
                   label={slide.label}
                   media={slide.media}
                   className="project-carousel__media"
-                  showMeta={false}
                 />
               </div>
             ))}

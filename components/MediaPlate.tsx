@@ -3,16 +3,13 @@ import type { MediaAsset, MediaTone } from "@/data/site";
 type Props = {
   tone: MediaTone;
   label: string;
-  caption?: string;
   className?: string;
-  showMeta?: boolean;
   media?: MediaAsset;
 };
 
-export function MediaPlate({ tone, label, caption, className = "", showMeta = true, media }: Props) {
+export function MediaPlate({ tone, label, className = "", media }: Props) {
   const fit = media?.fit ?? "cover";
   const display = media?.display ?? "full";
-  const align = media?.align ?? "center";
   const surface = media?.surface ?? "tone";
   const objectPosition = media?.objectPosition ?? "center";
 
@@ -23,7 +20,6 @@ export function MediaPlate({ tone, label, caption, className = "", showMeta = tr
         `media-plate--${tone}`,
         `media-plate--fit-${fit}`,
         `media-plate--display-${display}`,
-        `media-plate--align-${align}`,
         `media-plate--surface-${surface}`,
         media ? `media-plate--asset-${media.kind}` : "",
         className
@@ -31,7 +27,7 @@ export function MediaPlate({ tone, label, caption, className = "", showMeta = tr
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="media-plate__surface" aria-label={!media || media.kind === "video" ? label : undefined}>
+      <div className="media-plate__surface" aria-label={!media || media.kind !== "image" ? label : undefined}>
         {media ? (
           <div className="media-plate__asset">
             {media.kind === "video" ? (
@@ -47,11 +43,21 @@ export function MediaPlate({ tone, label, caption, className = "", showMeta = tr
                 aria-hidden="true"
                 style={{ objectPosition, aspectRatio: `${media.width} / ${media.height}` }}
               />
+            ) : media.kind === "embed" ? (
+              <iframe
+                className="media-plate__embed"
+                src={media.src}
+                title={label}
+                allow="autoplay; fullscreen; picture-in-picture"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                style={{ aspectRatio: `${media.width} / ${media.height}` }}
+              />
             ) : (
               <img
                 className="media-plate__image"
                 src={media.src}
-                alt={caption ? `${label}. ${caption}` : label}
+                alt={label}
                 width={media.width}
                 height={media.height}
                 style={{ objectPosition }}
@@ -60,12 +66,6 @@ export function MediaPlate({ tone, label, caption, className = "", showMeta = tr
           </div>
         ) : null}
       </div>
-      {showMeta ? (
-        <figcaption className="media-plate__meta">
-          <span className="caption">{label}</span>
-          {caption ? <span className="caption">{caption}</span> : null}
-        </figcaption>
-      ) : null}
     </figure>
   );
 }

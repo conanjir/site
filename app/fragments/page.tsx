@@ -11,7 +11,6 @@ export default function FragmentsPage() {
               tone={fragment.tone}
               label={fragment.title}
               className={`fragment-tile__media fragment-tile__media--${fragment.aspect}`}
-              showMeta={false}
             />
             <h2>{fragment.title}</h2>
           </article>

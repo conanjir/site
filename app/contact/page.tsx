@@ -8,13 +8,13 @@ export default function ContactPage() {
           <a href={`mailto:${siteSettings.email}`} className="contact-email">
             {siteSettings.email}
           </a>
-          <div className="contact-links">
+          {/* <div className="contact-links">
             {siteSettings.socials.map((social) => (
               <a key={social.label} href={social.href} className="text-link">
                 {social.label}
               </a>
             ))}
-          </div>
+          </div> */}
         </div>
         <div aria-hidden="true" />
       </div>

@@ -331,11 +331,12 @@ main {
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: var(--carousel-height);
+  height: var(--carousel-height);
 }
 
 .project-carousel__track {
   display: flex;
+  height: 100%;
   transition: transform 240ms var(--ease);
   will-change: transform;
 }
@@ -343,14 +344,15 @@ main {
 .project-carousel__slide {
   flex: 0 0 100%;
   min-width: 0;
-  min-height: var(--carousel-height);
+  height: var(--carousel-height);
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 .project-carousel__media {
   width: 100%;
-  --plate-height: calc(var(--carousel-height) - 72px);
+  --plate-height: calc(100svh - (var(--header-offset) * 2));
 }
 
 .project-carousel__cursor {
@@ -430,6 +432,15 @@ main {
   pointer-events: none;
 }
 
+.media-plate__embed {
+  display: block;
+  width: var(--plate-display-width);
+  max-width: 100%;
+  height: auto;
+  max-height: var(--plate-display-height);
+  border: 0;
+}
+
 .media-plate--fit-cover .media-plate__surface {
   align-items: stretch;
 }
@@ -445,6 +456,12 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.media-plate--fit-cover .media-plate__embed {
+  width: 100%;
+  height: 100%;
+  max-height: none;
 }
 
 .media-plate--fit-contain .media-plate__image,
@@ -476,19 +493,7 @@ main {
   --plate-display-height: 62%;
 }
 
-.media-plate--align-left .media-plate__surface {
-  justify-content: flex-start;
-}
-
-.media-plate--align-right .media-plate__surface {
-  justify-content: flex-end;
-}
-
 .media-plate--surface-page {
-  --plate-background: #000;
-}
-
-.media-plate--surface-paper {
   --plate-background: #000;
 }
 
@@ -496,35 +501,8 @@ main {
   --plate-background: #050505;
 }
 
-.media-plate__meta {
-  display: grid;
-  gap: 2px;
-  justify-items: start;
-  margin-top: 10px;
-}
-
-.media-plate--surface-tone.media-plate--neutral .media-plate__surface {
-  background: #000;
-}
-
-.media-plate--surface-tone.media-plate--silt .media-plate__surface {
-  background: #000;
-}
-
-.media-plate--surface-tone.media-plate--misato .media-plate__surface {
-  background: #000;
-}
-
-.media-plate--surface-tone.media-plate--motion .media-plate__surface {
-  background: #000;
-}
-
-.media-plate--surface-tone.media-plate--retail .media-plate__surface {
-  background: #000;
-}
-
-.media-plate--surface-tone.media-plate--fragment .media-plate__surface {
-  background: #000;
+.media-plate--surface-tone {
+  --plate-background: #000;
 }
 
 .project-carousel__media.media-plate--fit-contain.media-plate--display-full {
@@ -562,7 +540,7 @@ main {
     pointer-events: none;
     transform: translate(-50%, -50%);
     color: #fff;
-    font-size: 18px;
+    font-size: 24px;
     line-height: 1;
     letter-spacing: 0.02em;
     white-space: nowrap;
@@ -589,7 +567,7 @@ main {
     pointer-events: none;
     transform: translate(-50%, -50%);
     color: #fff;
-    font-size: 24px;
+    font-size: 36px;
     line-height: 1;
     text-shadow: 0 0 18px rgba(0, 0, 0, 0.45);
     opacity: 0;
@@ -680,7 +658,7 @@ main {
   }
 
   .project-carousel__media {
-    --plate-height: calc(var(--carousel-height) - 40px);
+    --plate-height: calc(100svh - (var(--header-offset) * 2));
   }
 
   .project-carousel__media.media-plate--fit-contain.media-plate--display-full {

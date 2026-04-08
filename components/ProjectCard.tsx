@@ -24,7 +24,6 @@ export function ProjectCard({ project }: { project: Project }) {
             tone={project.heroTone}
             label={project.heroLabel}
             className="work-item__media"
-            showMeta={false}
             media={project.heroMedia}
           />
           <span className="work-item__cursor" aria-hidden="true">

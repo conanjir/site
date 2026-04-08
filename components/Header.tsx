@@ -7,7 +7,7 @@ import type { Route } from "next";
 
 const navItems = [
   { href: "/work", label: "Work" },
-  { href: "/fragments", label: "Fragments" },
+  // { href: "/fragments", label: "Fragments" },
   { href: "/info", label: "Info" },
   { href: "/contact", label: "Contact" }
 ] as const satisfies ReadonlyArray<{ href: Route; label: string }>;
