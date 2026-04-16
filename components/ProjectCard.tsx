@@ -10,7 +10,7 @@ import { MediaPlate } from "@/components/MediaPlate";
 
 export function ProjectCard({ project }: { project: Project }) {
   const cursorRef = useRef<HTMLSpanElement>(null);
-  const [hoverShift, setHoverShift] = useState(14);
+  const [hoverShift, setHoverShift] = useState(100);
   const cursorLabel = `${project.title} / ${project.year} / ${project.discipline}`;
   const homeMedia = {
     ...project.heroMedia,
@@ -49,7 +49,7 @@ export function ProjectCard({ project }: { project: Project }) {
         return;
       }
 
-      setHoverShift(Math.min(20, Math.max(12, Math.round(width * 0.025))));
+      setHoverShift(100);
     };
 
     void measureCursor();

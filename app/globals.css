@@ -192,7 +192,7 @@ main {
   position: relative;
   --cursor-x: 50%;
   --cursor-y: 50%;
-  --hover-shift: 100px;
+  --hover-shift: 50%;
 }
 
 .work-item__link {

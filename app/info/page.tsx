@@ -1,3 +1,5 @@
+import { siteSettings } from "@/data/site";
+
 export default function InfoPage() {
   return (
     <div className="page shell section-gap">
@@ -48,6 +50,15 @@ export default function InfoPage() {
               <span className="info-entry__label">Curatorial Team</span> — <em>Victorian College of the Arts Final
               Year{"\u00A0"}Exhibition,{"\u00A0"}2025</em>
             </p>
+          </div>
+        </section>
+
+        <section className="info-section">
+          <p className="info-section__heading">Contact</p>
+          <div className="contact-block">
+            <a href={`mailto:${siteSettings.email}`} className="contact-email">
+              {siteSettings.email}
+            </a>
           </div>
         </section>
       </div>
