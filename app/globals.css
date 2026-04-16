@@ -217,8 +217,22 @@ main {
   position: relative;
   z-index: 2;
   --plate-height: 70vh;
+  line-height: 0;
   transition: transform 180ms var(--ease);
   will-change: transform;
+}
+
+.work-item__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 0 18px 6px rgba(255, 255, 255, 0.14);
+  transition: opacity 180ms var(--ease);
 }
 
 .work-item__cursor {
@@ -251,6 +265,7 @@ main {
     max-width: 100%;
     min-height: 70vh;
     height: 70vh;
+    vertical-align: top;
   }
 
   .work-item__media.media-plate--fit-cover .media-plate__surface {
@@ -647,7 +662,11 @@ main {
   }
 
   .work-item__media-wrap:hover .work-item__media {
-    transform: translate3d(var(--hover-shift), var(--hover-shift), 0);
+    transform: translate3d(0, var(--hover-shift), 0);
+  }
+
+  .work-item__media-wrap:hover .work-item__media::after {
+    opacity: 1;
   }
 
   .work-item__media-wrap:hover .work-item__cursor {

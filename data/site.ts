@@ -167,7 +167,7 @@ const myMedia = {
     display: "full"
   }),
   poster: image("/images/my/my_popup.png", 3150, 3938, {
-    display: "full"
+    display: "medium"
   }),
   guidelines1: image("/images/my/my_guidelines1.png", 4271, 3335, {
     display: "full"
@@ -335,10 +335,6 @@ export const projects: Project[] = [
       {
         label: "Identity splash",
         media: siltMedia.splash
-      },
-      {
-        label: "Billboard",
-        media: siltMedia.billboard
       },
       {
         label: "Website",
