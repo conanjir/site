@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   title: "conanjir",
   description: siteSettings.infoText,
   icons: {
-    icon: "/images/favicon/favicon.png",
-    shortcut: "/images/favicon/favicon.png",
+    icon: "/images/favicon/favicon.svg",
+    shortcut: "/images/favicon/favicon.svg",
     apple: "/images/favicon/favicon.png"
   }
 };

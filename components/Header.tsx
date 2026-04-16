@@ -54,9 +54,6 @@ export function Header() {
 
       <div id="mobile-menu" className={`mobile-menu${isWorkIndex ? " mobile-menu--overlay" : ""}${open ? " is-open" : ""}`}>
         <nav className="mobile-menu__nav" aria-label="Mobile">
-          <Link href="/work" className="mobile-link" onClick={() => setOpen(false)}>
-            Conan J. Ido Richards
-          </Link>
           {navItems.map((item) => (
             <Link
               key={item.href}

@@ -137,46 +137,46 @@ const siltMedia = {
 
 const myMedia = {
   logo: image("/images/my/my_logo.png", 22859, 3266, {
-    display: "medium"
+    display: "full"
   }),
   ab1: image("/images/my/my_ab1.jpg", 2560, 3200, {
-    display: "narrow"
+    display: "full"
   }),
   ab2: image("/images/my/my_ab2.jpg", 2560, 3200, {
-    display: "narrow"
+    display: "full"
   }),
   ab3: image("/images/my/my_ab3.jpg", 2560, 3200, {
-    display: "narrow"
+    display: "full"
   }),
   ab4: image("/images/my/my_ab4.jpg", 3601, 4801, {
-    display: "narrow"
+    display: "full"
   }),
   bb1: image("/images/my/my_bb1.jpg", 3601, 4801, {
-    display: "narrow"
+    display: "full"
   }),
   bb2: image("/images/my/my_bb2.jpg", 3601, 4801, {
-    display: "narrow"
+    display: "full"
   }),
   bb3: image("/images/my/my_bb3.jpg", 3600, 4801, {
-    display: "narrow"
+    display: "full"
   }),
   bb4: image("/images/my/my_bb4.jpg", 3601, 4801, {
-    display: "narrow"
+    display: "full"
   }),
   bb5: image("/images/my/my_bb5.jpg", 3601, 4801, {
-    display: "narrow"
+    display: "full"
   }),
   poster: image("/images/my/my_popup.png", 3150, 3938, {
-    display: "narrow"
+    display: "full"
   }),
   guidelines1: image("/images/my/my_guidelines1.png", 4271, 3335, {
-    display: "wide"
+    display: "full"
   }),
   guidelines2: image("/images/my/my_guidelines2.png", 4271, 3335, {
-    display: "wide"
+    display: "full"
   }),
   guidelines3: image("/images/my/my_guidelines3.png", 4271, 3335, {
-    display: "wide"
+    display: "full"
   }),
   businesscard: image("/images/my/my_businesscard.jpg", 4000, 3000, {
     display: "wide"
