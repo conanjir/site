@@ -217,6 +217,10 @@ export function ProjectCarousel({ project }: { project: Project }) {
         <span className="project-carousel__cursor" aria-hidden="true">
           {pointerSide === "prev" ? "\u2190" : "\u2192"}
         </span>
+        <div className="project-carousel__swipe-hint" aria-hidden="true">
+          <span className="project-carousel__swipe-arrow">\u2190</span>
+          <span className="project-carousel__swipe-arrow">\u2192</span>
+        </div>
       </div>
     </section>
   );

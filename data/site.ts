@@ -242,6 +242,25 @@ const constellationsMedia = {
   })
 };
 
+const mimeverseMedia = {
+  hero: image("/images/mimeverse/mimeverse_wide.jpg", 3454, 1994, {
+    fit: "cover",
+    display: "full"
+  }),
+  mobile: image("/images/mimeverse/mimeverse_mobile.jpg", 1179, 2556, {
+    display: "narrow"
+  }),
+  exhibit: image("/images/mimeverse/mimeverse_exhibit.jpeg", 4032, 3024, {
+    display: "wide"
+  }),
+  zoom: image("/images/mimeverse/mimeverse_zoom.jpg", 1402, 930, {
+    display: "medium"
+  }),
+  demos: image("/images/mimeverse/mimeverse_demos.jpg", 1392, 917, {
+    display: "medium"
+  })
+};
+
 export const siteSettings = {
   name: "Conan Richards",
   statement:
@@ -258,9 +277,46 @@ export const siteSettings = {
 
 export const projects: Project[] = [
   {
+    slug: "mimeverse",
+    title: "mimeverse",
+    discipline: "Interactive Systems & Digital Identity",
+    description:
+      "A participatory web-based simulation exploring mimesis in digital contexts, where copying shifts from imitation to generative process.",
+    year: "2025",
+    type: "Interactive simulation",
+    tags: ["Systems", "Identity", "Participation"],
+    summary:
+      "A shared Conway's Game of Life simulation where copying becomes a generative, collective design process.",
+    heroTone: "neutral",
+    heroLabel: "Shared grid",
+    heroMedia: mimeverseMedia.hero,
+    intro:
+      "A participatory web-based simulation exploring mimesis in digital contexts, where copying shifts from imitation to generative process. Built on Conway’s Game of Life, the project enables users to input formations into a shared, evolving grid, producing a collective system driven by rule-based transformation and emergent behaviour. Each interaction contributes to a living visual ecology, reframing authorship as distributed and procedural rather than individual. The work positions the designer as a system architect, constructing conditions for continuous replication, mutation, and co-creation",
+    application:
+      "Participants accessed the system via their own devices, typically by scanning a QR code and entering a shared live canvas. From their phones, they could place small formations onto a central grid, choosing position and orientation through a minimal interface. Once placed, these inputs were not static. They immediately became subject to the system’s cellular rules, evolving, colliding with others, stabilising, or dissolving over time. Each user was assigned a distinct colour, allowing their contribution to be briefly identifiable before it was absorbed into the larger system. The experience was both direct and indirect. Users acted intentionally, but outcomes were unpredictable, shaped by the interaction between human input and autonomous simulation. Exhibited at Victorian College of the Arts Final Year Exhibition, 2025.",
+    media: [
+      {
+        label: "Mobile view",
+        media: mimeverseMedia.mobile
+      },
+      {
+        label: "Exhibition view",
+        media: mimeverseMedia.exhibit
+      },
+      {
+        label: "Grid detail",
+        media: mimeverseMedia.zoom
+      },
+      {
+        label: "Interface demos",
+        media: mimeverseMedia.demos
+      }
+    ]
+  },
+  {
     slug: "silt",
     title: "SILT",
-    discipline: "Spatial System — Branding",
+    discipline: "Spatial System & Identity",
     description:
       "A flexible identity system developed for a conceptual festival brief.",
     year: "2025",
@@ -313,7 +369,7 @@ export const projects: Project[] = [
   {
     slug: "misato-yukimoto",
     title: "Misato Yukimoto",
-    discipline: "Visual Identity — Fashion",
+    discipline: "Visual Identity & System",
     description:
       "A visual identity developed to realign the label's creative direction — reestablishing coherence without losing the quiet character the brand had built.",
     year: "2024",
@@ -386,7 +442,7 @@ export const projects: Project[] = [
   {
     slug: "foam",
     title: "Foam",
-    discipline: "Moving Image — Art Direction",
+    discipline: "Moving Image & Art Direction",
     description:
       "A short film set within an aging self-service carwash — tracing the deterioration of texture, memory, and touch.",
     year: "2025",
@@ -431,7 +487,7 @@ export const projects: Project[] = [
   {
     slug: "constellations",
     title: "Constellations",
-    discipline: "Event Production — Creative Direction",
+    discipline: "Event Production & Creative Direction",
     description:
       "A campaign event conceived and directed end-to-end — spanning graphic design, art direction, marketing, and the coordination of photographers, DJs, and creative collaborators.",
     year: "2025",
