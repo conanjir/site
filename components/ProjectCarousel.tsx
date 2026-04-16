@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { KeyboardEvent, MouseEvent, PointerEvent, TouchEvent } from "react";
 
 import { MediaPlate } from "@/components/MediaPlate";
@@ -47,37 +47,9 @@ function getSlides(project: Project): Slide[] {
 export function ProjectCarousel({ project }: { project: Project }) {
   const slides = getSlides(project);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const slideRefs = useRef<Array<HTMLDivElement | null>>([]);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pointerSide, setPointerSide] = useState<"prev" | "next">("next");
-  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
-
-  useEffect(() => {
-    const updateViewportHeight = () => {
-      if (typeof window === "undefined" || !window.matchMedia("(max-width: 640px)").matches) {
-        setViewportHeight(null);
-        return;
-      }
-
-      const slide = slideRefs.current[currentIndex];
-
-      if (!slide) {
-        return;
-      }
-
-      setViewportHeight(slide.offsetHeight);
-    };
-
-    const frame = window.requestAnimationFrame(updateViewportHeight);
-
-    window.addEventListener("resize", updateViewportHeight);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("resize", updateViewportHeight);
-    };
-  }, [currentIndex, slides.length]);
 
   const updatePointer = (event: PointerEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => {
     const viewport = viewportRef.current;
@@ -193,14 +165,11 @@ export function ProjectCarousel({ project }: { project: Project }) {
         onKeyDown={handleKeyDown}
         aria-label={`${project.title} image carousel`}
       >
-        <div className="project-carousel__viewport" style={viewportHeight ? { height: `${viewportHeight}px` } : undefined}>
+        <div className="project-carousel__viewport">
           <div className="project-carousel__track" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
             {slides.map((slide, index) => (
               <div
                 key={slide.id}
-                ref={(node) => {
-                  slideRefs.current[index] = node;
-                }}
                 className="project-carousel__slide"
                 aria-hidden={slide !== slides[currentIndex]}
               >
@@ -218,8 +187,8 @@ export function ProjectCarousel({ project }: { project: Project }) {
           {pointerSide === "prev" ? "\u2190" : "\u2192"}
         </span>
         <div className="project-carousel__swipe-hint" aria-hidden="true">
-          <span className="project-carousel__swipe-arrow">\u2190</span>
-          <span className="project-carousel__swipe-arrow">\u2192</span>
+          <span className="project-carousel__swipe-arrow">←</span>
+          <span className="project-carousel__swipe-arrow">→</span>
         </div>
       </div>
     </section>
