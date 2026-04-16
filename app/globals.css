@@ -190,9 +190,7 @@ main {
 
 .work-item__media-wrap {
   position: relative;
-  --cursor-x: 50%;
-  --cursor-y: 50%;
-  --hover-shift: 50%;
+  --hover-shift: 48px;
 }
 
 .work-item__link {
@@ -200,6 +198,8 @@ main {
 }
 
 .work-item__media {
+  position: relative;
+  z-index: 2;
   --plate-height: 70vh;
   transition: transform 180ms var(--ease);
   will-change: transform;
@@ -590,21 +590,16 @@ main {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .work-item__media-wrap:hover,
-  .work-item__media-wrap:hover * {
-    cursor: none;
-  }
-
   .work-item__cursor {
     display: block;
     position: absolute;
-    left: var(--cursor-x);
-    top: var(--cursor-y);
-    z-index: 2;
+    left: 0;
+    top: 0;
+    z-index: 1;
     pointer-events: none;
-    transform: translate(-50%, -50%);
+    transform: none;
     color: #fff;
-    font-size: 24px;
+    font-size: 18px;
     line-height: 1;
     letter-spacing: 0.02em;
     white-space: nowrap;
@@ -614,7 +609,7 @@ main {
   }
 
   .work-item__media-wrap:hover .work-item__media {
-    transform: translate3d(var(--hover-shift), 0, 0);
+    transform: translate3d(var(--hover-shift), var(--hover-shift), 0);
   }
 
   .work-item__media-wrap:hover .work-item__cursor {
