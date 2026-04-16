@@ -200,7 +200,7 @@ main {
 }
 
 .work-item__media {
-  --plate-height: 40vh;
+  --plate-height: 70vh;
   transition: transform 180ms var(--ease);
   will-change: transform;
 }
@@ -233,8 +233,8 @@ main {
     display: inline-flex;
     width: auto;
     max-width: 100%;
-    min-height: 40vh;
-    height: 40vh;
+    min-height: 70vh;
+    height: 70vh;
   }
 
   .work-item__media.media-plate--fit-cover .media-plate__surface {
@@ -245,7 +245,7 @@ main {
     width: auto;
     max-width: none;
     min-height: 0;
-    height: 40vh;
+    height: 70vh;
     flex: 0 1 auto;
     align-items: center;
     justify-content: flex-start;
@@ -257,7 +257,7 @@ main {
     max-width: none;
     min-height: 0;
     max-height: none;
-    height: 40vh;
+    height: 70vh;
     aspect-ratio: auto;
     object-fit: contain;
   }
